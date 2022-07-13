@@ -8,11 +8,20 @@
 </head>
 <body>
     <div id="myApp">
-        <h1> {{quote}} </h1>
-        <blockquote>-{{ author}}</blockquote>
-        <button v-on:click="changeQuote">
-            Change quote
-        </button>
+        <h1>Batman quotes <small>{{newQuote}}</small></h1>
+        <input
+          type="text"
+          v-model="newQuote"
+          v-on:keypress="addQuote">
+        <hr>
+        <ul>
+            <li v-for="({quote, author}, index) in quotes">
+                <span>{{index + 1}} {{quote}}</span>
+                <!-- <blockquote v-if="author">-{{author}}</blockquote> -->
+                <blockquote v-show="author">-{{author}}</blockquote>
+
+            </li>
+        </ul>
     </div>
 
 
