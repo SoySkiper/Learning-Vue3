@@ -31,7 +31,7 @@ export default {
             }else if(answer == 'no'){
                 this.answer = '¡No!'
             }else{
-                this.answer = 'Tal vez'
+                this.answer = 'Tal vez :/'
             }
             this.img = image
         }  
