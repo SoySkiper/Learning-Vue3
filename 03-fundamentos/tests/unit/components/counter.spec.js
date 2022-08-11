@@ -3,26 +3,28 @@ import Counter from "@/components/Counter"
 
 describe("Counter component", () => {
 
+    let wrapper
+    
+    beforeEach(() => {
+        wrapper = shallowMount(Counter)
+    })
 //   test("Debe de hacer match con el snapshot", () => {
 //     const wrapper = shallowMount(Counter)
 //     expect(wrapper.html()).toMatchSnapshot()
 //   })
 
     test('h2 debe de tener el valor por defecto', () => {
-        const wrapper = shallowMount(Counter)
 
         expect(wrapper.find('h2').exists()).toBeTruthy()
 
         const h2 = wrapper.find('h2')
 
         expect(h2.text()).toBe('Counter')
-
     })
 
     test('el valor por defecto debe de ser 100 por defecto', () => {
 
         // Wrapper
-        const wrapper = shallowMount(Counter)
 
         // pTags
         // const paragraph = wrapper.findAll('p').at(1)
@@ -35,29 +37,40 @@ describe("Counter component", () => {
 
     test('debe de incrementar y decrementar', async() => {
 
-        const wrapper = shallowMount(Counter)
-        
-        const increaseBtn = wrapper.find('button')
+        let [increase, decrease] = wrapper.findAll('button')
 
-        await increaseBtn.trigger('click')
+        await increase.trigger('click')
+        await increase.trigger('click')
+        await increase.trigger('click')
+        await decrease.trigger('click')
+        await decrease.trigger('click')
 
-        let value = wrapper.find('[data-testid="counter"]').text()
+        const value = wrapper.find('[data-testid="counter"]').text()
 
         expect(value).toBe('101')
 
+    })
 
+    test('debe de establecer siempre el valor por defecto', () => {
+        const {start} = wrapper.props()
 
-        const decreaseBtn = wrapper.findAll('button')[1]
+        const value = wrapper.find('[data-testid="counter"]').text()
 
-        await decreaseBtn.trigger('click')
-        await decreaseBtn.trigger('click')
+        expect(Number(value)).toBe(start)
+    })
 
-        value = wrapper.find('[data-testid="counter"]').text()
+    test('debe de mostrar laa prop title', () => {
 
+        const title = 'Hola mundo'
         
-        expect(value).toBe('99')
+        const wrapper = shallowMount(Counter, {
 
+            props: {
+                title,
+                // start: '100'
+            }
+        })
 
-
+        expect(wrapper.find('h2').text()).toBe(title)
     })
 })

@@ -24,21 +24,32 @@ export default {
     },
     methods:{
         async getAnswer(){
-            this.answer = 'Pensando...'
-            const {answer, image} = await fetch('https://yesno.wtf/api').then( r => r.json())
-            if(answer == 'yes'){
-                this.answer = '¡Sí!'
-            }else if(answer == 'no'){
-                this.answer = '¡No!'
-            }else{
-                this.answer = 'Tal vez :/'
+
+            try {
+                this.answer = 'Pensando...'
+                const {answer, image} = await fetch('https://yesno.wtf/api').then( r => r.json())
+                if(answer == 'yes'){
+                    this.answer = '¡Sí!'
+                }else if(answer == 'no'){
+                    this.answer = '¡No!'
+                }else{
+                    this.answer = 'Tal vez :/'
+                }
+                this.img = image
+                
+            } catch (error) {
+                console.log('Indecision component: ', error)
+                this.answer = 'No se pudo cargar el API'
+                this.img = null
             }
-            this.img = image
         }  
     },
     watch: {
         question(value, oldValue){
             this.isValidQuestion = false
+
+            console.log({value})
+            
             if( !value.includes('?')) return
             this.isValidQuestion = true
             // TODO: Realizar una petición HTTP
