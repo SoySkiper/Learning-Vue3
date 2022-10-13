@@ -1,8 +1,12 @@
 <template>
-    <a v-if="isExternalLink" target="_blank" class="normal-link"
-        :href="link.to">{{link.name}}</a>
-    <router-link v-else :to="link.to" v-slot="{href, isActive}">
-        <a :href="href" :class="isActive ? 'is-active' : 'normal-link'">{{link.name}}</a>
+
+    <a v-if="isExternalLink" target="_blank" class="normal-link" :href="link.to">{{link.name}}</a>
+
+    <router-link v-else :to="route" v-slot="{ isActive }">
+        
+        <!-- href -->
+        <a :class="isActive ? 'is-active' : 'normal-link'">{{link.name}}</a>
+
     </router-link>
 </template>
 
@@ -17,7 +21,12 @@ export default {
     computed: {
         isExternalLink() {
             return this.link.to.startsWith('https')
-        }
+        },
+        route() {
+            return this.link.id === undefined
+                ? { name: this.link.to }
+                : { name: this.link.to, params: { id: this.link.id} }
+        }   
     }
 }
 </script>
