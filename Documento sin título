@@ -1,0 +1,7 @@
+State: Similar a la data(),  es reactivo
+Getters: Similar a las propiedades computadas
+Mutations: Funciones que pueden modificar al State
+Actions: Funciones que PUEDEN ser asíncronas que pueden llamar mutations.
+Modules: Agrupador de state, getters, mutations, actions y otros módulos. (Muy útil)
+
+
